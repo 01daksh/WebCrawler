@@ -1,7 +1,3 @@
-github.com/01daksh/crawler-core v0.0.0-20251225110539-2d205b4704ae h1:wGxcD1pPMkNIv4qw7sMQ4RVn6e8mY2LJS5rv/wRAuq8=
-github.com/01daksh/crawler-core v0.0.0-20251225110539-2d205b4704ae/go.mod h1:Rt2K/8/4v3hKY2dnfgv63/gs7l2emNXHURPCQwXeumo=
-github.com/01daksh/crawler-core v0.0.1 h1:+4SCTnjWBTsxLMwUnTbC0NjGVlCG2g6CxM4jKxyknbE=
-github.com/01daksh/crawler-core v0.0.1/go.mod h1:Rt2K/8/4v3hKY2dnfgv63/gs7l2emNXHURPCQwXeumo=
 github.com/01daksh/crawler-core v0.0.2 h1:EdlPcPJmeF3bJBz4c79ZtHS3Hg09lZPUxrH/ZSKZKrY=
 github.com/01daksh/crawler-core v0.0.2/go.mod h1:xJnukrZ4CX78109ta56okUbMfPCoGpEreMv0/nDL+N4=
 github.com/bytedance/sonic v1.14.0 h1:/OfKt8HFw0kh2rj8N0F6C/qPGRESq0BbaNZgcNXXzQQ=
@@ -36,6 +32,8 @@ github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX
 github.com/google/gofuzz v1.0.0/go.mod h1:dBl0BpW6vV/+mYPU4Po3pmUjxk6FQPldtuIdl/M65Eg=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/google/wire v0.7.0 h1:JxUKI6+CVBgCO2WToKy/nQk0sS+amI9z9EjVmdaocj4=
+github.com/google/wire v0.7.0/go.mod h1:n6YbUQD9cPKTnHXEBN2DXlOp/mVADhVErcMFb0v3J18=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
 github.com/klauspost/cpuid/v2 v2.3.0 h1:S4CRMLnYUhGeDFDqkGriYKdfoFlDnMtqTiI/sFzhA9Y=

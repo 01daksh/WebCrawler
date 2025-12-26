@@ -4,7 +4,10 @@ go 1.25.5
 
 require github.com/gin-gonic/gin v1.11.0
 
-require github.com/01daksh/crawler-core v0.0.2
+require (
+	github.com/01daksh/crawler-core v0.0.2
+	github.com/google/wire v0.7.0
+)
 
 require (
 	github.com/bytedance/sonic v1.14.0 // indirect
