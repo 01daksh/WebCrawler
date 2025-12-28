@@ -5,7 +5,7 @@ import (
 	"WebCrawler/internal/models"
 	"fmt"
 	"net/http"
-	"os"
+
 	"golang.org/x/net/html"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ func NewCrawlerService() *CrawlerService {
 }
 
 func (cw *CrawlerService) AddCrawler(c *gin.Context) {
-	
+
 	var req models.CrawlerBO
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
@@ -27,10 +27,10 @@ func (cw *CrawlerService) AddCrawler(c *gin.Context) {
 			"error": "Bad Request",
 		})
 	}
-	fmt.Print("Daksh")
+
 	links := cw.TraversePages(req.GetSeedUrl())
 
-	if links != nil{
+	if links != nil {
 		c.JSON(http.StatusOK, links)
 		return
 	}
@@ -38,10 +38,10 @@ func (cw *CrawlerService) AddCrawler(c *gin.Context) {
 	c.JSON(http.StatusNoContent, gin.H{
 		"message": "nothing for now!",
 	})
-	
+
 }
 
-func (cw *CrawlerService) TraversePages(seedUrl string) []string{
+func (cw *CrawlerService) TraversePages(seedUrl string) []string {
 	traversalData := common.NewTraversalData()
 
 	for i := 0; i < common.WorkerSize; i++ {
@@ -93,24 +93,22 @@ func crawlPage(url common.UrlInfo, traversalData *common.TraversalData) {
 }
 
 func fetchAndExtract(url string) (links []string) {
-	resp , err := http.Get(url)
-	if err != nil{
+	resp, err := http.Get(url)
+	if err != nil {
 		fmt.Println("ERROR: Failed to get page:", err)
 		return
 	}
 	defer resp.Body.Close()
 
-
 	doc, err := html.Parse(resp.Body)
 	if err != nil {
 		fmt.Println("ERROR: Failed to parse HTML:", err)
-		os.Exit(1)
+		return
 	}
 
 	links = visit(nil, doc)
 	return links
 }
-
 
 func visit(links []string, n *html.Node) []string {
 	if n.Type == html.ElementNode && n.Data == "a" {
