@@ -194,12 +194,6 @@ wire
 4. Create controller methods in `internal/crawler/controller.go`
 5. Wire dependencies in `internal/crawler/wire.go`
 
-### Testing
-
-```bash
-go test ./...
-```
-
 ## Dependencies
 
 - **Gin**: HTTP web framework
@@ -208,14 +202,3 @@ go test ./...
 - **Google Wire**: Dependency injection
 - **crawler-core**: Core crawling functionality (local module)
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run tests
-5. Submit a pull request
-
-## License
-
-[Add your license information here]
