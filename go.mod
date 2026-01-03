@@ -10,6 +10,7 @@ require (
 	github.com/01daksh/crawler-core v0.0.3
 	github.com/google/wire v0.7.0
 	github.com/spf13/viper v1.21.0
+	go.mongodb.org/mongo-driver v1.17.6
 	golang.org/x/net v0.42.0
 )
 
@@ -51,7 +52,6 @@ require (
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
-	go.mongodb.org/mongo-driver v1.17.6 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/arch v0.20.0 // indirect
