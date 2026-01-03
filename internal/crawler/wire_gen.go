@@ -9,7 +9,8 @@ package crawler
 // Injectors from wire.go:
 
 func NewCrawlerWire() *CrawlerController {
-	crawlerService := NewCrawlerService()
+	crawlerRepository := NewCrawlerRepository()
+	crawlerService := NewCrawlerService(crawlerRepository)
 	crawlerController := NewCrawlerController(crawlerService)
 	return crawlerController
 }

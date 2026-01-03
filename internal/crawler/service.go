@@ -3,45 +3,55 @@ package crawler
 import (
 	"WebCrawler/common"
 	"WebCrawler/internal/models"
+	"context"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"golang.org/x/net/html"
 
-	"github.com/gin-gonic/gin"
+	"WebCrawler/internal/interfaces"
 )
 
 type CrawlerService struct {
+	repo interfaces.CrawlerRepoInterface
 }
 
-func NewCrawlerService() *CrawlerService {
-	return &CrawlerService{}
-}
-
-func (cw *CrawlerService) AddCrawler(c *gin.Context) {
-
-	var req models.CrawlerBO
-	err := c.ShouldBindJSON(&req)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Bad Request",
-		})
+func NewCrawlerService(repo interfaces.CrawlerRepoInterface) *CrawlerService {
+	return &CrawlerService{
+		repo: repo,
 	}
+}
+
+const (
+	batchSize int = 100
+)
+
+func (cw *CrawlerService) AddCrawler(ctx context.Context, req models.CrawlerBO) ([]common.LinkInformation, error) {
 
 	links := cw.TraversePages(req.GetSeedUrl())
 
-	if links != nil {
-		c.JSON(http.StatusOK, links)
-		return
+	if len(links) == 0 {
+		return nil, nil
 	}
 
-	c.JSON(http.StatusNoContent, gin.H{
-		"message": "nothing for now!",
-	})
+	for i := 0; i < len(links); i += batchSize {
+		end := i + batchSize
+		if end > len(links) {
+			end = len(links)
+		}
 
+		batch := links[i:end]
+
+		if err := cw.repo.AddCrawler(ctx, batch); err != nil {
+			return nil, err
+		}
+	}
+
+	return links, nil
 }
 
-func (cw *CrawlerService) TraversePages(seedUrl string) []string {
+func (cw *CrawlerService) TraversePages(seedUrl string) []common.LinkInformation {
 	traversalData := common.NewTraversalData()
 
 	for i := 0; i < common.WorkerSize; i++ {
@@ -57,15 +67,24 @@ func (cw *CrawlerService) TraversePages(seedUrl string) []string {
 	traversalData.WaitGroup.Wait()
 	close(traversalData.Queue)
 
-	return traversalData.Links
+	return traversalData.LinkInfo
 }
 
 func worker(traversalData *common.TraversalData) {
 	for url := range traversalData.Queue {
 		func() {
 			defer traversalData.WaitGroup.Done()
+
 			crawlPage(url, traversalData)
-			traversalData.Links = append(traversalData.Links, url.SeedUrl)
+
+			traversalData.Mutex.Lock()
+
+			traversalData.LinkInfo = append(traversalData.LinkInfo, common.LinkInformation{
+				Link:  url.SeedUrl,
+				Level: url.Level,
+			})
+
+			traversalData.Mutex.Unlock()
 		}()
 	}
 }
@@ -82,7 +101,11 @@ func crawlPage(url common.UrlInfo, traversalData *common.TraversalData) {
 	links := fetchAndExtract(url.SeedUrl)
 
 	for _, link := range links {
-		fmt.Print(link, " ")
+		if !isValidHTTPSLink(link) {
+			continue
+		}
+
+		fmt.Println(link)
 		traversalData.WaitGroup.Add(1)
 		traversalData.Queue <- common.UrlInfo{
 			Level:   url.Level + 1,
@@ -122,4 +145,8 @@ func visit(links []string, n *html.Node) []string {
 		links = visit(links, c)
 	}
 	return links
+}
+
+func isValidHTTPSLink(link string) bool {
+	return strings.HasPrefix(link, "https://")
 }

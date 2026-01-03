@@ -1,3 +1,5 @@
 WebCrawler.code-workspace
 .env
 .vscode
+config.yaml
+compose.yaml

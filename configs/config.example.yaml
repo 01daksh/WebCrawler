@@ -1,0 +1,11 @@
+env: "local"
+environment: "WebCrawler"
+
+server:
+  httpServerAddress: ":8086"
+
+db:
+  loglevel: "info"
+  mongoDB:
+    mongoURI: ${MONGODB_URI}
+    

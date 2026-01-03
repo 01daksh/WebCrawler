@@ -2,13 +2,21 @@ package common
 
 import (
 	"sync"
+
+	"github.com/spf13/viper"
 )
 
 type TraversalData struct {
 	Queue   chan UrlInfo
 	Visited sync.Map
 	WaitGroup *sync.WaitGroup
-	Links []string
+	LinkInfo []LinkInformation
+	Mutex sync.Mutex
+}
+
+type LinkInformation struct{
+	Link string
+	Level int
 }
 
 type UrlInfo struct{
@@ -20,6 +28,11 @@ func NewTraversalData() *TraversalData {
 	return &TraversalData{
 		Queue: make(chan UrlInfo),
 		WaitGroup: &sync.WaitGroup{},
-		Links: make([]string, 0),
+		LinkInfo: make([]LinkInformation, 0),
 	}
+}
+
+
+func GetMongoConnectionString(key string)string{
+	return viper.GetString(key)
 }
