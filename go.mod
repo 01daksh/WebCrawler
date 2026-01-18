@@ -7,7 +7,7 @@ require github.com/gin-gonic/gin v1.11.0
 // replace github.com/01daksh/crawler-core => ../crawler-core
 
 require (
-	github.com/01daksh/crawler-core v0.0.3
+	github.com/01daksh/crawler-core v0.0.4
 	github.com/google/wire v0.7.0
 	github.com/spf13/viper v1.21.0
 	go.mongodb.org/mongo-driver v1.17.6
